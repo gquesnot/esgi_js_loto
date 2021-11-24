@@ -111,7 +111,7 @@ export class Loto{
         return  (this.matchReward.hasOwnProperty(nbMatch) ? this.matchReward[nbMatch] : 0) + (this.random.otherNumber === this.user.otherNumber ? this.numberSuppReward : 0)
     }
 
-    showTirage(reward) {
+    showTirage() {
 
 
 
@@ -143,7 +143,7 @@ export class Loto{
         for (let i=0; i<n; i++){
             this.regenerateRandom()
             reward += this.calculateReward()
-            this.showTirage(reward)
+            this.showTirage()
         }
         this.showResult(reward)
 
