@@ -10,8 +10,6 @@ export class Loto{
     constructor() {
         this.random = new LotoGrid();
         this.user = new LotoGrid();
-        let allInputs = Array.prototype.slice.call(document.querySelectorAll('input'))
-        let input10 = allInputs.pop();
         this.hmlElements = {
             inputs50 : Array.from(document.getElementsByClassName("nombres")),
             input10: document.getElementById("complementaire"),
@@ -23,8 +21,8 @@ export class Loto{
             result: document.getElementById("result"),
             reset : document.getElementById("reset"),
             nbRound : document.getElementById("nbRound"),
-
         }
+
         this.matchReward = {
             2:1000,
             3:5000,
@@ -43,7 +41,11 @@ export class Loto{
 
 
     play() {
-        this.getInputsValue()
+        if (!this.getInputsValue()){
+            alert("?");
+            this.resetHtml()
+            return ;
+        }
         if (this.user.numberSet.size === 5){
             let nbRound = parseInt(this.hmlElements.nbRound.value)
             if (nbRound <= 0)
@@ -59,7 +61,6 @@ export class Loto{
             console.log("error");
         }
     }
-
     resetHtml() {
         this.hmlElements.resultSaisi.innerHTML = "";
         this.hmlElements.resultGenerate.innerHTML = "";
@@ -70,8 +71,9 @@ export class Loto{
         this.hmlElements.inputs50.forEach(input => {
             input.style.setProperty("opacity", "1")
         })
-
     }
+
+
 
     regenerateRandom(){
 
@@ -90,6 +92,9 @@ export class Loto{
         this.user.regenerateSet()
         for (const input of this.hmlElements.inputs50){
             let val = parseInt(input.value);
+            if (val <= 0){
+                return false;
+            }
             if (this.user.numberSet.has(val)){
                 input.classList.add("warning")
             }
@@ -101,7 +106,8 @@ export class Loto{
             }
         }
         this.user.otherNumber = parseInt(this.hmlElements.input10.value);
-        this.hmlElements.input10.style.setProperty("opacity", "0.5")
+        this.hmlElements.input10.style.setProperty("opacity", "0.5");
+        return true;
     }
 
 
