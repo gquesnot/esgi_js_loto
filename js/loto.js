@@ -48,7 +48,9 @@ export class Loto{
             let nbRound = parseInt(this.hmlElements.nbRound.value)
             if (nbRound <= 0)
             {
-                alert("lol");
+                alert("?");
+                this.resetHtml()
+                return ;
             }
             this.playNRound(nbRound)
 
