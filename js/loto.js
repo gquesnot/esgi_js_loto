@@ -48,7 +48,7 @@ export class Loto{
         }
         if (this.user.numberSet.size === 5){
             let nbRound = parseInt(this.hmlElements.nbRound.value)
-            if (nbRound <= 0)
+            if (! this.isValidNumber(nbRound))
             {
                 alert("?");
                 this.resetHtml()
@@ -88,11 +88,16 @@ export class Loto{
         this.random.otherNumber = getRandomInt(10)
     }
 
+
+    isValidNumber(nb) {
+        return !isNaN(nb) && nb !== undefined && nb > 0
+    }
+
     getInputsValue(){
         this.user.regenerateSet()
         for (const input of this.hmlElements.inputs50){
             let val = parseInt(input.value);
-            if (val <= 0){
+            if (! this.isValidNumber(val)){
                 return false;
             }
             if (this.user.numberSet.has(val)){
