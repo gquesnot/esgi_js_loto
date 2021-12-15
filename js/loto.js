@@ -2,9 +2,6 @@
 
 import {LotoGrid} from "./loto_grid.js";
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
 
 
 export class Loto{
@@ -36,10 +33,6 @@ export class Loto{
         this.hmlElements.submitBtn.addEventListener("click", ()=>this.play());
         this.hmlElements.reset.addEventListener("click", ()=>this.resetHtml());
     }
-
-
-
-
 
 
     play() {
@@ -84,13 +77,13 @@ export class Loto{
 
         this.random.regenerateSet();
         while(this.random.numberSet.size < 5){
-            let r = getRandomInt(50);
+            let r = this.getRandomInt(50);
             while (this.random.numberSet.has(r)){
-                r = getRandomInt(50);
+                r = this.getRandomInt(50);
             }
             this.random.numberSet.add(r);
         }
-        this.random.otherNumber = getRandomInt(10);
+        this.random.otherNumber = this.getRandomInt(10);
     }
 
 
@@ -162,6 +155,11 @@ export class Loto{
         this.showResult(reward);
 
     }
+
+    getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
 
 
 }
