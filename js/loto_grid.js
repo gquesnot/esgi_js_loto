@@ -1,11 +1,13 @@
+"use strict";
+
 export class LotoGrid{
     constructor() {
-        this.regenerateSet()
+        this.regenerateSet();
     }
 
     regenerateSet(){
-        this.numberSet = new Set()
-        this.otherNumber = 0
+        this.numberSet = new Set();
+        this.otherNumber = 0;
     }
 
 }

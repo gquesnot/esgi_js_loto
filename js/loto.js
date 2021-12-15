@@ -1,3 +1,5 @@
+"use strict";
+
 import {LotoGrid} from "./loto_grid.js";
 
 function getRandomInt(max) {
@@ -21,18 +23,18 @@ export class Loto{
             result: document.getElementById("result"),
             reset : document.getElementById("reset"),
             nbRound : document.getElementById("nbRound"),
-        }
+        };
 
         this.matchReward = {
             2:1000,
             3:5000,
             4:10000,
             5:100000,
-        }
-        this.numberSuppReward = 2000
+        };
+        this.numberSuppReward = 2000;
 
-        this.hmlElements.submitBtn.addEventListener("click", ()=>this.play())
-        this.hmlElements.reset.addEventListener("click", ()=>this.resetHtml())
+        this.hmlElements.submitBtn.addEventListener("click", ()=>this.play());
+        this.hmlElements.reset.addEventListener("click", ()=>this.resetHtml());
     }
 
 
@@ -43,7 +45,7 @@ export class Loto{
     play() {
         if (!this.getInputsValue()){
             alert("?");
-            this.resetHtml()
+            this.resetHtml();
             return ;
         }
         if (this.user.numberSet.size === 5){
@@ -51,10 +53,10 @@ export class Loto{
             if (! this.isValidNumber(nbRound))
             {
                 alert("?");
-                this.resetHtml()
+                this.resetHtml();
                 return ;
             }
-            this.playNRound(nbRound)
+            this.playNRound(nbRound);
 
         }
         else{
@@ -65,11 +67,11 @@ export class Loto{
         this.hmlElements.resultSaisi.innerHTML = "";
         this.hmlElements.resultGenerate.innerHTML = "";
         this.hmlElements.resultH3.innerHTML = "";
-        this.hmlElements.result.classList.add("hide")
-        this.hmlElements.choix.classList.remove("hide")
+        this.hmlElements.result.classList.add("hide");
+        this.hmlElements.choix.classList.remove("hide");
         this.hmlElements.input10.style.setProperty("opacity", "1");
         this.hmlElements.inputs50.forEach(input => {
-            input.style.setProperty("opacity", "1")
+            input.style.setProperty("opacity", "1");
         })
     }
 
@@ -77,37 +79,37 @@ export class Loto{
 
     regenerateRandom(){
 
-        this.random.regenerateSet()
+        this.random.regenerateSet();
         while(this.random.numberSet.size < 5){
-            let r = getRandomInt(50)
+            let r = getRandomInt(50);
             while (this.random.numberSet.has(r)){
-                r = getRandomInt(50)
+                r = getRandomInt(50);
             }
-            this.random.numberSet.add(r)
+            this.random.numberSet.add(r);
         }
-        this.random.otherNumber = getRandomInt(10)
+        this.random.otherNumber = getRandomInt(10);
     }
 
 
     isValidNumber(nb) {
-        return !isNaN(nb) && nb !== undefined && nb > 0
+        return !isNaN(nb) && nb !== undefined && nb > 0;
     }
 
     getInputsValue(){
-        this.user.regenerateSet()
+        this.user.regenerateSet();
         for (const input of this.hmlElements.inputs50){
             let val = parseInt(input.value);
             if (! this.isValidNumber(val)){
                 return false;
             }
             if (this.user.numberSet.has(val)){
-                input.classList.add("warning")
+                input.classList.add("warning");
             }
             else{
                 if (input.classList.contains("warning"))
-                    input.classList.remove("warning")
-                input.style.setProperty("opacity", "0.5")
-                this.user.numberSet.add(val)
+                    input.classList.remove("warning");
+                input.style.setProperty("opacity", "0.5");
+                this.user.numberSet.add(val);
             }
         }
         this.user.otherNumber = parseInt(this.hmlElements.input10.value);
@@ -119,12 +121,10 @@ export class Loto{
     calculateReward() {
         // python style
         let nbMatch = Array.from(this.user.numberSet).filter(x => this.random.numberSet.has(x)).length;
-        return  (this.matchReward.hasOwnProperty(nbMatch) ? this.matchReward[nbMatch] : 0) + (this.random.otherNumber === this.user.otherNumber ? this.numberSuppReward : 0)
+        return  (this.matchReward.hasOwnProperty(nbMatch) ? this.matchReward[nbMatch] : 0) + (this.random.otherNumber === this.user.otherNumber ? this.numberSuppReward : 0);
     }
 
     showTirage() {
-
-
 
         let resGenerate = "<div class='tirage'>";
         for (let elem of this.random.numberSet){
@@ -145,18 +145,18 @@ export class Loto{
             Pour Rappel, Voici votre grille:${Array.from(this.user.numberSet).join(", ")}
             et le numero complementaire <span style="font-weight: bold">${this.user.otherNumber}</span>
         `;
-        this.hmlElements.result.classList.remove("hide")
-        this.hmlElements.choix.classList.add("hide")
+        this.hmlElements.result.classList.remove("hide");
+        this.hmlElements.choix.classList.add("hide");
     }
 
     playNRound(n) {
-        let reward = 0
+        let reward = 0;
         for (let i=0; i<n; i++){
-            this.regenerateRandom()
-            reward += this.calculateReward()
-            this.showTirage()
+            this.regenerateRandom();
+            reward += this.calculateReward();
+            this.showTirage();
         }
-        this.showResult(reward)
+        this.showResult(reward);
 
     }
 
