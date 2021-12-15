@@ -49,7 +49,7 @@ export class Loto{
             this.resetHtml();
             return ;
         }
-        //wrong inputs value size
+        //good inputs value size
         if (this.user.numberSet.size === 5){
             let nbRound = parseInt(this.hmlElements.nbRound.value)
             // wrong nbRound Value
